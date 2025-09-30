@@ -1,10 +1,10 @@
 package webservices;
 
 // Import the necessary JAX-RS (Java API for RESTful Web Services) annotations and classes
-import javax.ws.rs.GET;               // Annotation to indicate that a method responds to an HTTP GET request
-import javax.ws.rs.Path;              // Annotation to define the URL path of a resource
-import javax.ws.rs.PathParam;         // Annotation to extract dynamic values from the URL
-import javax.ws.rs.Produces;          // Annotation to define the type of content returned (text, JSON, XML…)
+import entities.UniteEnseignement;
+import metiers.UniteEnseignementBusiness;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;    // Provides constants for standard media types (e.g., TEXT_PLAIN, APPLICATION_JSON…)
 import javax.ws.rs.core.Response;     // Class used to build a custom HTTP response
@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;     // Class used to build a custom HTTP respo
 // The resource will be accessible at the base URL followed by /hello
 @Path("/hello")
 public class HelloRessources {
+    UniteEnseignementBusiness helper = new UniteEnseignementBusiness();
 
     // This method handles GET requests sent to /hello/hi
     @GET
@@ -36,5 +37,26 @@ public class HelloRessources {
                 .status(200)
                 .entity("Hello " + name + "!") // Insert the name from the URL into the response
                 .build();
+    }
+
+    @Path("/list")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response list() {
+        return Response.status(200).entity(
+                helper.getListeUE()
+        ).build();
+    }
+
+    @Path("/add")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response addEntity(UniteEnseignement ue) {
+        if(helper.addUniteEnseignement(ue)){
+        return Response.status(201).entity("added seccessfully").build();
+        } else {
+            return Response.status(409).entity("already exists").build();
+        }
     }
 }
