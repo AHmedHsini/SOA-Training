@@ -5,7 +5,6 @@ import entities.UniteEnseignement;
 import metiers.UniteEnseignementBusiness;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;    // Provides constants for standard media types (e.g., TEXT_PLAIN, APPLICATION_JSON…)
 import javax.ws.rs.core.Response;     // Class used to build a custom HTTP response
 
