@@ -53,4 +53,14 @@ public class UEResources {
                 .entity("not found")
                 .build();
     }
+    //search by code
+    @Path("/search")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response search(@QueryParam(value = "s") int semsetre){
+        return Response
+                .status(200)
+                .entity(this.helper.getUEBySemestre(semsetre))
+                .build();
+    }
 }
