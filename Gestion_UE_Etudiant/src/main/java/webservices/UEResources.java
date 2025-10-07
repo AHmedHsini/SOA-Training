@@ -1,16 +1,15 @@
 package webservices;
 
+import entities.UniteEnseignement;
 import metiers.UniteEnseignementBusiness;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/ue")
 public class UEResources {
-    UniteEnseignementBusiness helper = new UniteEnseignementBusiness();
+    static UniteEnseignementBusiness helper = new UniteEnseignementBusiness();
     //getallUE
     @Path("/list")
     @GET
@@ -19,6 +18,23 @@ public class UEResources {
         return Response
                 .status(200)
                 .entity(this.helper.getListeUE())
+                .build();
+    }
+    //addUE
+    @Path("/add")
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addUE(UniteEnseignement ue) {
+        if(this.helper.addUniteEnseignement(ue)){
+            return Response
+                    .status(201)
+                    .entity("added UE")
+                    .build();
+        }
+        return Response
+                .status(409)
+                .entity("alredy exist")
                 .build();
     }
 }
