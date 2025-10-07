@@ -37,4 +37,20 @@ public class UEResources {
                 .entity("alredy exist")
                 .build();
     }
+    //deleteUE
+    @Path("/delete/{code}")
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteUE(@PathParam("code") int code) {
+        if (this.helper.deleteUniteEnseignement(code)) {
+            return Response
+                    .status(200)
+                    .entity("deleted")
+                    .build();
+        }
+        return Response
+                .status(404)
+                .entity("not found")
+                .build();
+    }
 }
