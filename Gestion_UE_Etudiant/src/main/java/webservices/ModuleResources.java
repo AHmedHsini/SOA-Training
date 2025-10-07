@@ -52,5 +52,11 @@ public class ModuleResources {
                 .build();
     }
     //search by Matricule
+    @Path("/search")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchModule(@QueryParam("m") String matricule) {
+        return Response.status(200).entity(this.helperModule.getModuleByMatricule(matricule)).build();
+    }
 
 }
